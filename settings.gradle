@@ -9,4 +9,5 @@
 
 rootProject.name = 'rsoi-2022-lab2-microservices-gagrim1'
 include 'ticketService'
+include 'gateway'
 
