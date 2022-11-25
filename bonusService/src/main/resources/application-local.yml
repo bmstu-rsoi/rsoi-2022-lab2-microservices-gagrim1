@@ -1,0 +1,10 @@
+spring:
+  flyway:
+    baselineOnMigrate: true
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bonuses
+    username: postgres
+    password: 139l0IMg
