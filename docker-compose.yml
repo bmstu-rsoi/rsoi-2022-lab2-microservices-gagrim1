@@ -20,7 +20,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - "8070:8070"
+      - "8050:8050"
   flight-service:
     build:
       context: flightService
@@ -34,7 +34,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - "8050:8050"
+      - "8070:8070"
   gateway:
     build:
       context: gateway

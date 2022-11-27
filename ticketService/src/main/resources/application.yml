@@ -2,4 +2,4 @@ spring:
   profiles:
     active: local
 server:
-  port: 8050
+  port: 8070

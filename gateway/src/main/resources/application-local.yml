@@ -12,6 +12,6 @@ path:
 
 port:
   service:
-    ticket: "8050"
+    ticket: "8070"
     flight: "8060"
-    bonus: "8070"
+    bonus: "8050"
