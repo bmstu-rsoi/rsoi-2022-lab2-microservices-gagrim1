@@ -1,5 +1,7 @@
 package com.romanov.privilege.endpoint;
 
+import com.romanov.privilege.model.dto.BonusOutput;
+import com.romanov.privilege.model.dto.CalculationPriceInput;
 import com.romanov.privilege.model.dto.DiscountOutput;
 import com.romanov.privilege.model.dto.PrivilegeOutput;
 import com.romanov.privilege.service.PrivilegeService;
@@ -19,16 +21,9 @@ public class PrivilegeEndpoint {
         return service.get(username);
     }
 
-    @PostMapping("/deposit")
-    public void deposit(@RequestParam("id") Integer id,
-                        @RequestParam("price") Integer price) {
-        service.deposit(id, price);
-    }
-
-    @PostMapping("/discount")
-    public DiscountOutput discountPrice(@RequestParam("id") Integer id,
-                                        @RequestParam("price") Integer price) {
-        return service.discountPrice(id, price);
+    @PostMapping("/calculate")
+    public BonusOutput calculatePrice(@RequestBody CalculationPriceInput input) {
+        return service.calculatePrice(input);
     }
 
     @DeleteMapping

@@ -2,9 +2,7 @@ package com.romanov.privilege.service.impl;
 
 import com.romanov.privilege.exception.NotFoundException;
 import com.romanov.privilege.model.PrivilegeEntity;
-import com.romanov.privilege.model.dto.DiscountOutput;
-import com.romanov.privilege.model.dto.PrivilegeHistoryOutput;
-import com.romanov.privilege.model.dto.PrivilegeOutput;
+import com.romanov.privilege.model.dto.*;
 import com.romanov.privilege.model.mapper.PrivilegeMapper;
 import com.romanov.privilege.repository.PrivilegeRepository;
 import com.romanov.privilege.service.PrivilegeHistoryService;
@@ -32,17 +30,45 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    @Transactional
-    public void deposit(Integer id, Integer price) {
-        Double cashback = price * 0.1;
-        repository.deposit(id, cashback.intValue());
-        log.info(cashback + " was deposited to the privilege with id: " + id);
+    public BonusOutput calculatePrice(CalculationPriceInput input) {
+        Integer price = input.getPrice();
+        PrivilegeEntity entity = repository.findByUsername(input.getUsername())
+                .orElseThrow(() -> new NotFoundException(
+                        "Privilege of user: " + input.getUsername() + " not found!")
+                );
+        BonusOutput output = new BonusOutput();
+        PrivilegeOutput privilegeOutput = PrivilegeOutput.builder()
+                .status(entity.getStatus())
+                .balance(entity.getBalance())
+                .build();
+
+        if (input.getPaidFromBonus()) {
+            DiscountOutput discountOutput = discountPrice(entity, price);
+            privilegeOutput.setBalance(discountOutput.getNewBalance());
+            output.setPaidByMoney(discountOutput.getPriceAfterDiscount());
+            output.setPaidByBonus(discountOutput.getPriceDifference());
+            output.setPrivilege(privilegeOutput);
+        } else {
+            Integer cashback = deposit(entity.getId(), price);
+            privilegeOutput.setBalance(privilegeOutput.getBalance() + cashback);
+            output.setPaidByMoney(price);
+            output.setPaidByBonus(0);
+            output.setPrivilege(privilegeOutput);
+        }
+        return output;
     }
 
     @Override
-    public DiscountOutput discountPrice(Integer id, Integer price) {
-        PrivilegeEntity entity = repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Privilege with id: " + id + " not found!"));
+    @Transactional
+    public Integer deposit(Integer id, Integer price) {
+        Double cashback = price * 0.1;
+        repository.deposit(id, cashback.intValue());
+        log.info(cashback + " was deposited to the privilege with id: " + id);
+        return cashback.intValue();
+    }
+
+    @Override
+    public DiscountOutput discountPrice(PrivilegeEntity entity, Integer price) {
         int balance = entity.getBalance();
         int priceAfterDiscount;
         int difference = price - balance;
@@ -58,7 +84,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
         log.info("Price: " + price + " was withdrawn from " + entity.getUsername() + "'s bonus account");
         return DiscountOutput.builder()
-                .privilegeId(id)
+                .privilegeId(entity.getId())
                 .price(price)
                 .priceAfterDiscount(priceAfterDiscount)
                 .priceDifference(price - priceAfterDiscount)

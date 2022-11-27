@@ -1,14 +1,12 @@
 package com.romanov.privilege.model.dto;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Value;
 
-@Value
+@Data
 @Builder
 public class PrivilegeOutput {
-    Integer id;
-    String username;
-    String status;
-    Integer balance;
-
+    private String status;
+    private Integer balance;
 }

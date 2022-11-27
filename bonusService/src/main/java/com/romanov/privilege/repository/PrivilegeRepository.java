@@ -14,5 +14,5 @@ public interface PrivilegeRepository extends JpaRepository<PrivilegeEntity, Inte
     Optional<PrivilegeEntity> findByUsername(String username);
     @Query("UPDATE PrivilegeEntity p SET p.balance = p.balance + :value WHERE p.id = :id")
     @Modifying(clearAutomatically = true)
-    void deposit(@Param("id") Integer id, @Param("value") Integer value);
+    Integer deposit(@Param("id") Integer id, @Param("value") Integer value);
 }

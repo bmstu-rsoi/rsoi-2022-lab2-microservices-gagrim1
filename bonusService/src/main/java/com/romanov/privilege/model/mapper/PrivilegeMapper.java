@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 public class PrivilegeMapper {
     public PrivilegeOutput convert(PrivilegeEntity entity) {
         return PrivilegeOutput.builder()
-                .id(entity.getId())
-                .username(entity.getUsername())
                 .balance(entity.getBalance())
                 .status(entity.getStatus())
                 .build();
