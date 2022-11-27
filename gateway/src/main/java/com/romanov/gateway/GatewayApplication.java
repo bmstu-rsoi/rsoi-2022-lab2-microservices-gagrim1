@@ -1,11 +1,11 @@
-package com.romanov;
+package com.romanov.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Main {
+public class GatewayApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
+        SpringApplication.run(GatewayApplication.class, args);
     }
 }
