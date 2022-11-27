@@ -14,21 +14,21 @@ services:
     ports:
       - "5432:5432"
 
-  bonusService:
+  bonus-service:
     build:
       context: bonusService
     depends_on:
       - postgres
     ports:
       - "8070:8070"
-  flightService:
+  flight-service:
     build:
       context: flightService
     depends_on:
       - postgres
     ports:
       - "8060:8060"
-  ticketService:
+  ticket-service:
     build:
       context: ticketService
     depends_on:
@@ -41,9 +41,9 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - bonusService
-      - flightService
-      - ticketService
+      - bonus-service
+      - flight-service
+      - ticket-service
 
 volumes:
   db-data:
