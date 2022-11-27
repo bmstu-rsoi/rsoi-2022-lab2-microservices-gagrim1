@@ -5,6 +5,6 @@ spring:
     database: POSTGRESQL
     show-sql: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/flights
+    url: jdbc:postgresql://postgres:5432/flights
     username: program
     password: test
