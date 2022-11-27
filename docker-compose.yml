@@ -14,7 +14,36 @@ services:
     ports:
       - "5432:5432"
 
-# TODO добавить сервисы
+  bonusService:
+    build:
+      context: bonusService
+    depends_on:
+      - postgres
+    ports:
+      - "8070:8070"
+  flightService:
+    build:
+      context: flightService
+    depends_on:
+      - postgres
+    ports:
+      - "8060:8060"
+  ticketService:
+    build:
+      context: ticketService
+    depends_on:
+      - postgres
+    ports:
+      - "8050:8050"
+  gateway:
+    build:
+      context: gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - bonusService
+      - flightService
+      - ticketService
 
 volumes:
   db-data:

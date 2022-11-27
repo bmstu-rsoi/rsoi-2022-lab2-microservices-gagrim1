@@ -1,0 +1,34 @@
+package com.romanov.privilege.endpoint;
+
+import com.romanov.privilege.model.dto.BonusOutput;
+import com.romanov.privilege.model.dto.CalculationPriceInput;
+import com.romanov.privilege.model.dto.DiscountOutput;
+import com.romanov.privilege.model.dto.PrivilegeOutput;
+import com.romanov.privilege.service.PrivilegeService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/privileges")
+@RequiredArgsConstructor
+public class PrivilegeEndpoint {
+    private final PrivilegeService service;
+
+    @GetMapping
+    public PrivilegeOutput get(@RequestHeader("X-User-Name") String username) {
+        return service.get(username);
+    }
+
+    @PostMapping("/calculate")
+    public BonusOutput calculatePrice(@RequestBody CalculationPriceInput input) {
+        return service.calculatePrice(input);
+    }
+
+    @DeleteMapping
+    public void returnBonus(@RequestHeader("X-User-Name") String username,
+                            @RequestParam("ticketUid") UUID ticketUid) {
+        service.returnBonus(username, ticketUid);
+    }
+}

@@ -1,0 +1,10 @@
+spring:
+  flyway:
+    baselineOnMigrate: true
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/flights
+    username: program
+    password: test
