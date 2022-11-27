@@ -1,7 +1,10 @@
 package com.romanov.gateway.endpoint;
 
 import com.romanov.gateway.config.AppParams;
-import com.romanov.gateway.exception.*;
+import com.romanov.gateway.exception.BonusServiceNotAvailableException;
+import com.romanov.gateway.exception.FlightServiceNotAvailableException;
+import com.romanov.gateway.exception.GatewayErrorException;
+import com.romanov.gateway.exception.TicketServiceNotAvailableException;
 import com.romanov.gateway.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -9,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -23,8 +25,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class GatewayEndpoint {
     private static final String USERNAME_PARAM = "X-User-Name";
-
-    private final RestTemplate restTemplate;
     private final AppParams params;
     @Resource
     private WebClient webClient;
