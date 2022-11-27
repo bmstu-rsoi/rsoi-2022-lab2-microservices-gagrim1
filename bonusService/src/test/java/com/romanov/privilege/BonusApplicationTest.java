@@ -1,5 +1,6 @@
 package com.romanov.privilege;
 
+import com.romanov.privilege.model.dto.CalculationPriceInput;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
@@ -23,55 +24,22 @@ public class BonusApplicationTest extends EndpointTest {
                         .header("X-User-Name", "Roman"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.username").value("Roman"))
                 .andExpect(jsonPath("$.status").value("GOLD"))
                 .andExpect(jsonPath("$.balance").value(500));
-        //todo create tests
     }
 
     @Test
-    void shouldDiscountPrice() throws Exception {
-        mockMvc.perform(post("/privileges/discount")
+    void shouldCalculatePrice() throws Exception {
+        String input = objectMapper.writeValueAsString(new CalculationPriceInput("Roman", 1500, false));
+        mockMvc.perform(post("/privileges/calculate")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .param("id", "1")
-                        .param("price", "1500"))
+                        .content(input))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.privilegeId").value(1))
-                .andExpect(jsonPath("$.price").value(1500))
-                .andExpect(jsonPath("$.priceAfterDiscount").value(1000))
-                .andExpect(jsonPath("$.priceDifference").value(500))
-                .andExpect(jsonPath("$.newBalance").value(0));
-    }
-
-    @Test
-    void shouldDeposit() throws Exception {
-        mockMvc.perform(get("/privileges")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header("X-User-Name", "Roman"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.username").value("Roman"))
-                .andExpect(jsonPath("$.status").value("GOLD"))
-                .andExpect(jsonPath("$.balance").value(500));
-
-        mockMvc.perform(post("/privileges/deposit")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .param("id", "1")
-                        .param("price", "2000"))
-                .andExpect(status().isOk());
-
-        mockMvc.perform(get("/privileges")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header("X-User-Name", "Roman"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.username").value("Roman"))
-                .andExpect(jsonPath("$.status").value("GOLD"))
-                .andExpect(jsonPath("$.balance").value(700));
+                .andExpect(jsonPath("$.paidByMoney").value(1500))
+                .andExpect(jsonPath("$.paidByBonus").value(0))
+                .andExpect(jsonPath("$.privilege.status").value("GOLD"))
+                .andExpect(jsonPath("$.privilege.balance").value(650));
     }
 
     @Test
@@ -87,8 +55,6 @@ public class BonusApplicationTest extends EndpointTest {
                         .header("X-User-Name", "Roman"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.username").value("Roman"))
                 .andExpect(jsonPath("$.status").value("GOLD"))
                 .andExpect(jsonPath("$.balance").value(2000));
     }
@@ -106,8 +72,6 @@ public class BonusApplicationTest extends EndpointTest {
                         .header("X-User-Name", "Roman"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.username").value("Roman"))
                 .andExpect(jsonPath("$.status").value("GOLD"))
                 .andExpect(jsonPath("$.balance").value(300));
     }

@@ -30,6 +30,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
+    @Transactional
     public BonusOutput calculatePrice(CalculationPriceInput input) {
         Integer price = input.getPrice();
         PrivilegeEntity entity = repository.findByUsername(input.getUsername())
