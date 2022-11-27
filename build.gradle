@@ -1,7 +1,12 @@
 plugins {
     id 'java'
+    id 'application'
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.springframework.boot") version "2.7.2"
+}
+
+application {
+    mainClass = 'com.romanov.rsoi.SecondApplication'
 }
 
 repositories {
