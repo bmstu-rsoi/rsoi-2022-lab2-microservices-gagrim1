@@ -1,6 +1,6 @@
 spring:
   flyway:
-    baselineOnMigrate: true
+    baselineOnMigrate: false
   jpa:
     database: POSTGRESQL
     show-sql: true
