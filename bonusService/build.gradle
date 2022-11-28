@@ -4,11 +4,11 @@ plugins {
 }
 
 application {
-    mainClass = 'com.romanov.BonusApplication'
+    mainClass = 'com.romanov.privilege.BonusApplication'
 }
 
 
-group 'com.romanov'
+group 'com.romanov.privilege'
 version '1.0'
 
 repositories {

@@ -4,11 +4,11 @@ plugins {
 }
 
 application {
-    mainClass = 'com.romanov.FlightApplication'
+    mainClass = 'com.romanov.flight.FlightApplication'
 }
 
 
-group 'com.romanov'
+group 'com.romanov.flight'
 version '1.0'
 
 repositories {

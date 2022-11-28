@@ -4,11 +4,11 @@ plugins {
 }
 
 application {
-    mainClass = 'com.romanov.GatewayApplication'
+    mainClass = 'com.romanov.gateway.GatewayApplication'
 }
 
 
-group 'com.romanov'
+group 'com.romanov.gateway'
 version '1.0'
 
 repositories {

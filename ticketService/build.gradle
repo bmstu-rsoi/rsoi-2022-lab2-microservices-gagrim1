@@ -4,11 +4,11 @@ plugins {
 }
 
 application {
-    mainClass = 'com.romanov.TicketApplication'
+    mainClass = 'com.romanov.ticket.TicketApplication'
 }
 
 
-group 'com.romanov'
+group 'com.romanov.ticket'
 version '1.0'
 
 repositories {
