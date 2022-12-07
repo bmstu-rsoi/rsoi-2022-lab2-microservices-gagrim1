@@ -1,14 +1,14 @@
 host:
   service:
-    ticket: "ticketService"
-    flight: "flightService"
-    bonus: "bonusService"
+    ticket: "ticket-service"
+    flight: "flight-service"
+    bonus: "bonus-service"
 
 path:
   service:
-    ticket: "api/v1/tickets"
-    flight: "api/v1/flights"
-    bonus: "api/v1/bonuses"
+    ticket: "tickets"
+    flight: "flights"
+    bonus: "privileges"
 
 port:
   service:

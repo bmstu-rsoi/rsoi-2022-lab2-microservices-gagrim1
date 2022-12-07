@@ -21,6 +21,7 @@ services:
       - postgres
     ports:
       - "8050:8050"
+
   flight-service:
     build:
       context: flightService
@@ -28,6 +29,7 @@ services:
       - postgres
     ports:
       - "8060:8060"
+
   ticket-service:
     build:
       context: ticketService
@@ -35,6 +37,7 @@ services:
       - postgres
     ports:
       - "8070:8070"
+
   gateway:
     build:
       context: gateway
@@ -44,6 +47,5 @@ services:
       - bonus-service
       - flight-service
       - ticket-service
-
 volumes:
   db-data:
