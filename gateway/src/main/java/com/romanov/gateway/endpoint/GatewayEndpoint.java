@@ -52,6 +52,26 @@ public class GatewayEndpoint {
                 .block();
     }
 
+    @GetMapping("/privilege")
+    public PrivilegeResponse getPrivilegeWithHistory(@RequestHeader(USERNAME_PARAM) String username) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .host(params.getHostBonus())
+                        .path(params.getPathBonus() + "/with-history")
+                        .port(params.getPortBonus())
+                        .build())
+                .header(USERNAME_PARAM, username)
+                .retrieve()
+                .onStatus(HttpStatus::isError, error -> {
+                    throw new BonusServiceNotAvailableException(error.statusCode());
+                })
+                .bodyToMono(PrivilegeResponse.class)
+                .onErrorMap(Throwable.class, error -> {
+                    throw new GatewayErrorException(error.getMessage());
+                })
+                .block();
+    }
+
     @GetMapping("/me")
     public UserInfoOutput getUserInfo(@RequestHeader(USERNAME_PARAM) String username) {
         return new UserInfoOutput(getTickets(username), getPrivilege(username));
