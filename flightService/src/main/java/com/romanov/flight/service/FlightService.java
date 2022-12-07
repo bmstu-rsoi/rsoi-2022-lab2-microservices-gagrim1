@@ -1,8 +1,7 @@
 package com.romanov.flight.service;
 
-import com.romanov.flight.model.dto.FlightOutput;
-import org.springframework.data.domain.Page;
+import com.romanov.flight.model.dto.PaginationOutput;
 
 public interface FlightService {
-    Page<FlightOutput> getAll(Integer page, Integer size);
+    PaginationOutput getAll(Integer page, Integer size);
 }
