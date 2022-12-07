@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -24,9 +25,15 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
     @Override
     public PrivilegeOutput get(String username) {
-        PrivilegeEntity entity = repository.findByUsername(username)
-                .orElseThrow(() -> new NotFoundException("User do not have a privilege."));
-        return mapper.convert(entity);
+        return mapper.convert(getEntity(username));
+    }
+
+    @Override
+    public PrivilegeResponse getWithHistory(String username) {
+        PrivilegeEntity entity = getEntity(username);
+        PrivilegeOutput privilege = mapper.convert(entity);
+        List<PrivilegeHistoryOutput> history = historyService.getByPrivilegeId(entity.getId());
+        return new PrivilegeResponse(privilege, history);
     }
 
     @Override
@@ -101,8 +108,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     @Override
     public void returnBonus(String username, UUID ticketUid) {
         PrivilegeHistoryOutput history = historyService.getByTicketUid(ticketUid);
-        PrivilegeEntity privilege = repository.findByUsername(username)
-                .orElseThrow(() -> new NotFoundException(""));
+        PrivilegeEntity privilege = getEntity(username);
         String operationType = history.getOperationType();
         Integer balance = privilege.getBalance();
         Integer balanceDiff = history.getBalanceDiff();
@@ -112,6 +118,11 @@ public class PrivilegeServiceImpl implements PrivilegeService {
             privilege.setBalance(balance + balanceDiff);
         }
         repository.save(privilege);
+    }
+
+    private PrivilegeEntity getEntity(String username) {
+        return repository.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException("User do not have a privilege."));
     }
 
 }

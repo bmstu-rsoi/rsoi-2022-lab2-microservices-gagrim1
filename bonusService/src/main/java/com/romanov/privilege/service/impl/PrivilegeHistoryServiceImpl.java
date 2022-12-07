@@ -10,6 +10,7 @@ import com.romanov.privilege.service.PrivilegeHistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -23,6 +24,14 @@ public class PrivilegeHistoryServiceImpl implements PrivilegeHistoryService {
         PrivilegeHistoryEntity entity = repository.findByTicketUid(ticketUid)
                 .orElseThrow(() -> new NotFoundException(""));
         return mapper.convert(entity);
+    }
+
+    @Override
+    public List<PrivilegeHistoryOutput> getByPrivilegeId(Integer privilegeId) {
+        return repository.getByPrivilegeId(privilegeId)
+                .stream()
+                .map(mapper::convert)
+                .toList();
     }
 }
 

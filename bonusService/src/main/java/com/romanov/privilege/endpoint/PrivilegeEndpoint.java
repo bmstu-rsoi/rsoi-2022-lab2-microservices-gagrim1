@@ -1,9 +1,6 @@
 package com.romanov.privilege.endpoint;
 
-import com.romanov.privilege.model.dto.BonusOutput;
-import com.romanov.privilege.model.dto.CalculationPriceInput;
-import com.romanov.privilege.model.dto.DiscountOutput;
-import com.romanov.privilege.model.dto.PrivilegeOutput;
+import com.romanov.privilege.model.dto.*;
 import com.romanov.privilege.service.PrivilegeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +16,11 @@ public class PrivilegeEndpoint {
     @GetMapping
     public PrivilegeOutput get(@RequestHeader("X-User-Name") String username) {
         return service.get(username);
+    }
+
+    @GetMapping("/with-history")
+    public PrivilegeResponse getWithHistory(@RequestHeader("X-User-Name") String username) {
+        return service.getWithHistory(username);
     }
 
     @PostMapping("/calculate")
