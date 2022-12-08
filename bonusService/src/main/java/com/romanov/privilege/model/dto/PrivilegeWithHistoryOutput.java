@@ -5,7 +5,8 @@ import lombok.Value;
 import java.util.List;
 
 @Value
-public class PrivilegeResponse {
-    PrivilegeOutput output;
+public class PrivilegeWithHistoryOutput {
+    String status;
+    Integer balance;
     List<PrivilegeHistoryOutput> history;
 }

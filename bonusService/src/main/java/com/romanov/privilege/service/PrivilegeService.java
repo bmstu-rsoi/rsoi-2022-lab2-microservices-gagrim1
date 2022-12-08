@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface PrivilegeService {
     PrivilegeOutput get(String username);
-    PrivilegeResponse getWithHistory(String username);
+    PrivilegeWithHistoryOutput getWithHistory(String username);
     BonusOutput calculatePrice(CalculationPriceInput input);
     Integer deposit(Integer id, Integer price);
     DiscountOutput discountPrice(PrivilegeEntity entity, Integer price);

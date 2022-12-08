@@ -29,6 +29,15 @@ public class BonusApplicationTest extends EndpointTest {
     }
 
     @Test
+    void shouldReturnPrivilegeWithHistory() throws Exception {
+        mockMvc.perform(get("/privileges/with-history")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("X-User-Name", "Roman"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"));
+    }
+
+    @Test
     void shouldCalculatePrice() throws Exception {
         String input = objectMapper.writeValueAsString(new CalculationPriceInput("Roman", 1500, false));
         mockMvc.perform(post("/privileges/calculate")

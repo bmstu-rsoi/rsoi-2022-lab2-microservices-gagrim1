@@ -29,11 +29,11 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    public PrivilegeResponse getWithHistory(String username) {
+    public PrivilegeWithHistoryOutput getWithHistory(String username) {
         PrivilegeEntity entity = getEntity(username);
         PrivilegeOutput privilege = mapper.convert(entity);
         List<PrivilegeHistoryOutput> history = historyService.getByPrivilegeId(entity.getId());
-        return new PrivilegeResponse(privilege, history);
+        return new PrivilegeWithHistoryOutput(privilege.getStatus(), privilege.getBalance(), history);
     }
 
     @Override

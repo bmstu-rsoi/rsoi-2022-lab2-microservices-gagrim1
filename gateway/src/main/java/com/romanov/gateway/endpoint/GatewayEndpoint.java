@@ -53,7 +53,7 @@ public class GatewayEndpoint {
     }
 
     @GetMapping("/privilege")
-    public PrivilegeResponse getPrivilegeWithHistory(@RequestHeader(USERNAME_PARAM) String username) {
+    public ResponseEntity<?> getPrivilegeWithHistory(@RequestHeader(USERNAME_PARAM) String username) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .host(params.getHostBonus())
@@ -65,7 +65,7 @@ public class GatewayEndpoint {
                 .onStatus(HttpStatus::isError, error -> {
                     throw new BonusServiceNotAvailableException(error.statusCode());
                 })
-                .bodyToMono(PrivilegeResponse.class)
+                .toEntity(Object.class)
                 .onErrorMap(Throwable.class, error -> {
                     throw new GatewayErrorException(error.getMessage());
                 })

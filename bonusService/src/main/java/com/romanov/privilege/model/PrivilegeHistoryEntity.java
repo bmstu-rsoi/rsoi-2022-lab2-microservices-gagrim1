@@ -21,7 +21,7 @@ public class PrivilegeHistoryEntity {
     private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "privilege_id")
-    private PrivilegeEntity privilegeId;
+    private PrivilegeEntity privilege;
     @Column(name = "ticket_uid", nullable = false)
     private UUID ticketUid;
     @Column(name = "datetime", nullable = false)

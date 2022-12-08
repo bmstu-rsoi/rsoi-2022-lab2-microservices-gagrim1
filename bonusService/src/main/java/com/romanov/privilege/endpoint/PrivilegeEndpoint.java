@@ -19,7 +19,7 @@ public class PrivilegeEndpoint {
     }
 
     @GetMapping("/with-history")
-    public PrivilegeResponse getWithHistory(@RequestHeader("X-User-Name") String username) {
+    public PrivilegeWithHistoryOutput getWithHistory(@RequestHeader("X-User-Name") String username) {
         return service.getWithHistory(username);
     }
 

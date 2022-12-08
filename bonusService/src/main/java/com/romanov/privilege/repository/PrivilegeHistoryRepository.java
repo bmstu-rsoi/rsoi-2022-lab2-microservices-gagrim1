@@ -11,5 +11,5 @@ import java.util.UUID;
 @Repository
 public interface PrivilegeHistoryRepository extends JpaRepository<PrivilegeHistoryEntity, Integer> {
     Optional<PrivilegeHistoryEntity> findByTicketUid(UUID ticketUid);
-    List<PrivilegeHistoryEntity> getByPrivilegeId(Integer privilegeId);
+    List<PrivilegeHistoryEntity> findAllByPrivilegeId(Integer privilegeId);
 }

@@ -29,7 +29,7 @@ public class PrivilegeHistoryServiceImpl implements PrivilegeHistoryService {
 
     @Override
     public List<PrivilegeHistoryOutput> getByPrivilegeId(Integer privilegeId) {
-        return repository.getByPrivilegeId(privilegeId)
+        return repository.findAllByPrivilegeId(privilegeId)
                 .stream()
                 .map(mapper::convert)
                 .collect(Collectors.toList());
