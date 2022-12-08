@@ -24,10 +24,10 @@ public class FlightEntity {
     private LocalDateTime dateTime;
     @ManyToOne
     @JoinColumn(name = "from_airport_id")
-    private AirportEntity fromAirportId;
+    private AirportEntity fromAirport;
     @ManyToOne
     @JoinColumn(name = "to_airport_id")
-    private AirportEntity toAirportId;
+    private AirportEntity toAirport;
     @Column(name = "price", nullable = false)
     private Integer price;
 }

@@ -13,7 +13,7 @@ public class FlightOutput {
     Integer id;
     String flightNumber;
     LocalDateTime dateTime;
-    Integer fromAirportId;
-    Integer toAirportId;
+    String fromAirport;
+    String toAirport;
     Integer price;
 }

@@ -13,8 +13,8 @@ public class FlightMapper {
                 entity.getId(),
                 entity.getFlightNumber(),
                 entity.getDateTime(),
-                entity.getFromAirportId().getId(),
-                entity.getToAirportId().getId(),
+                entity.getFromAirport().getCity() + " " + entity.getFromAirport().getName(),
+                entity.getToAirport().getCity() + " " + entity.getToAirport().getName(),
                 entity.getPrice());
     }
 
