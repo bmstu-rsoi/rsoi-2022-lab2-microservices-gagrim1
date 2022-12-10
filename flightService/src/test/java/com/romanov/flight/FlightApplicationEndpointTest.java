@@ -36,7 +36,7 @@ public class FlightApplicationEndpointTest extends EndpointTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$.flightNumber").value("AFL031"))
-                .andExpect(jsonPath("$.dateTime").value("2021-10-08T20:00:00"));
+                .andExpect(jsonPath("$.dateTime").value("2021-10-08 20:00"));
     }
 
 }
