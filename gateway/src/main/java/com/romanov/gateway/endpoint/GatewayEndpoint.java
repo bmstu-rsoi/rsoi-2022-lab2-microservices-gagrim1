@@ -295,7 +295,7 @@ public class GatewayEndpoint {
         webClient.delete()
                 .uri(uriBuilder -> uriBuilder
                         .host(params.getHostBonus())
-                        .path(params.getPathBonus() + ticketUid)
+                        .path(params.getPathBonus() + "/" + ticketUid)
                         .port(params.getPortBonus())
                         .build())
                 .header(USERNAME_PARAM, username)
@@ -314,7 +314,7 @@ public class GatewayEndpoint {
         webClient.delete()
                 .uri(uriBuilder -> uriBuilder
                         .host(params.getHostTicket())
-                        .path(params.getPathTicket() + ticketUid)
+                        .path(params.getPathTicket() + "/" + ticketUid)
                         .port(params.getPortTicket())
                         .build())
                 .header(USERNAME_PARAM, username)

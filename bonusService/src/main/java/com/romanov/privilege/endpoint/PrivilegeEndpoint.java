@@ -28,9 +28,9 @@ public class PrivilegeEndpoint {
         return service.calculatePrice(input);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{ticketUid}")
     public void returnBonus(@RequestHeader("X-User-Name") String username,
-                            @RequestParam("ticketUid") UUID ticketUid) {
+                            @PathVariable("ticketUid") UUID ticketUid) {
         service.returnBonus(username, ticketUid);
     }
 }

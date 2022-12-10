@@ -56,10 +56,9 @@ public class BonusApplicationTest extends EndpointTest {
 
     @Test
     void shouldReturnWithdrawing() throws Exception {
-        mockMvc.perform(delete("/privileges")
+        mockMvc.perform(delete("/privileges/d6818ec1-3d27-4a14-b660-1922b14c515d")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("X-User-Name", "Roman")
-                        .param("ticketUid", "d6818ec1-3d27-4a14-b660-1922b14c515d"))
+                        .header("X-User-Name", "Roman"))
                 .andExpect(status().isOk());
 
         mockMvc.perform(get("/privileges")
@@ -73,10 +72,9 @@ public class BonusApplicationTest extends EndpointTest {
 
     @Test
     void shouldReturnDepositing() throws Exception {
-        mockMvc.perform(delete("/privileges")
+        mockMvc.perform(delete("/privileges/6c10f0e9-170c-4d69-bc8b-56f303e59a10")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("X-User-Name", "Roman")
-                        .param("ticketUid", "6c10f0e9-170c-4d69-bc8b-56f303e59a10"))
+                        .header("X-User-Name", "Roman"))
                 .andExpect(status().isOk());
 
         mockMvc.perform(get("/privileges")
