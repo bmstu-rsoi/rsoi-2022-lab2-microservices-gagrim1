@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.util.UUID;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -39,7 +41,8 @@ public class BonusApplicationTest extends EndpointTest {
 
     @Test
     void shouldCalculatePrice() throws Exception {
-        String input = objectMapper.writeValueAsString(new CalculationPriceInput("Roman", 1500, false));
+        UUID ticketUid = UUID.fromString("d6818ec1-3d27-4a14-b660-1922b14c515d");
+        String input = objectMapper.writeValueAsString(new CalculationPriceInput("Roman", ticketUid, 1500, false));
         mockMvc.perform(post("/privileges/calculate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(input))

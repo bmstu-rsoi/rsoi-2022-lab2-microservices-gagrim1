@@ -9,7 +9,7 @@ public interface PrivilegeService {
     PrivilegeOutput get(String username);
     PrivilegeWithHistoryOutput getWithHistory(String username);
     BonusOutput calculatePrice(CalculationPriceInput input);
-    Integer deposit(Integer id, Integer price);
-    DiscountOutput discountPrice(PrivilegeEntity entity, Integer price);
+    Integer deposit(PrivilegeEntity entity, UUID ticketUid, Integer price);
+    DiscountOutput discountPrice(PrivilegeEntity entity, UUID ticketUid, Integer price);
     void returnBonus(String username, UUID ticketUid);
 }

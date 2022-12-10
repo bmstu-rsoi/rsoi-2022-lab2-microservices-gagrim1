@@ -206,6 +206,7 @@ public class GatewayEndpoint {
         FlightOutput flightOutput = getFlight(ticket.getFlightNumber());
         CalculationPriceInput priceInput = new CalculationPriceInput(
                 username,
+                ticket.getTicketUid(),
                 input.getPrice(),
                 input.getPaidFromBalance()
         );

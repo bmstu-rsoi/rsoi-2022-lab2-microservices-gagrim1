@@ -51,13 +51,13 @@ public class PrivilegeServiceImpl implements PrivilegeService {
                 .build();
 
         if (input.getPaidFromBonus()) {
-            DiscountOutput discountOutput = discountPrice(entity, price);
+            DiscountOutput discountOutput = discountPrice(entity, input.getTicketUid(), price);
             privilegeOutput.setBalance(discountOutput.getNewBalance());
             output.setPaidByMoney(discountOutput.getPriceAfterDiscount());
             output.setPaidByBonus(discountOutput.getPriceDifference());
             output.setPrivilege(privilegeOutput);
         } else {
-            Integer cashback = deposit(entity.getId(), price);
+            Integer cashback = deposit(entity, input.getTicketUid(), price);
             privilegeOutput.setBalance(privilegeOutput.getBalance() + cashback);
             output.setPaidByMoney(price);
             output.setPaidByBonus(0);
@@ -68,15 +68,19 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
     @Override
     @Transactional
-    public Integer deposit(Integer id, Integer price) {
+    public Integer deposit(PrivilegeEntity entity, UUID ticketUid, Integer price) {
         Double cashback = price * 0.1;
-        repository.deposit(id, cashback.intValue());
-        log.info(cashback + " was deposited to the privilege with id: " + id);
+        repository.deposit(entity.getId(), cashback.intValue());
+        historyService.saveHistory(new UpdateHistoryInput(entity,
+                ticketUid,
+                cashback.intValue(),
+                "FILL_IN_BALANCE"));
+        log.info(cashback + " was deposited to the privilege with id: " + entity.getId());
         return cashback.intValue();
     }
 
     @Override
-    public DiscountOutput discountPrice(PrivilegeEntity entity, Integer price) {
+    public DiscountOutput discountPrice(PrivilegeEntity entity, UUID ticketUid, Integer price) {
         int balance = entity.getBalance();
         int priceAfterDiscount;
         int difference = price - balance;
@@ -88,14 +92,19 @@ public class PrivilegeServiceImpl implements PrivilegeService {
             priceAfterDiscount = 0;
             balance = -difference;
         }
+        difference = price - priceAfterDiscount;
         updateBalance(entity, balance);
 
+        historyService.saveHistory(new UpdateHistoryInput(entity,
+                ticketUid,
+                difference,
+                "DEBIT_THE_ACCOUNT"));
         log.info("Price: " + price + " was withdrawn from " + entity.getUsername() + "'s bonus account");
         return DiscountOutput.builder()
                 .privilegeId(entity.getId())
                 .price(price)
                 .priceAfterDiscount(priceAfterDiscount)
-                .priceDifference(price - priceAfterDiscount)
+                .priceDifference(difference)
                 .newBalance(balance)
                 .build();
     }
