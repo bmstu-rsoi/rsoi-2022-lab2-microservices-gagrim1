@@ -35,7 +35,7 @@ public class GatewayEndpoint {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .host(params.getHostFlight())
-                        .path(params.getPathFlight())
+                        .path(params.getPathFlight() + "/all")
                         .port(params.getPortFlight())
                         .queryParam("page", page)
                         .queryParam("size", size)
@@ -156,6 +156,7 @@ public class GatewayEndpoint {
     public BuyingOutput buyTicket(@RequestHeader(USERNAME_PARAM) String username,
                                   @RequestBody BuyingInput input) {
         TicketOutput ticket = createTicket(username, input);
+        FlightOutput flightOutput = getFlight(ticket.getFlightNumber());
         CalculationPriceInput priceInput = new CalculationPriceInput(
                 username,
                 input.getPrice(),
@@ -165,15 +166,34 @@ public class GatewayEndpoint {
         return BuyingOutput.builder()
                 .ticketUid(ticket.getTicketUid())
                 .flightNumber(ticket.getFlightNumber())
-                .fromAirport(ticket.getFromAirport())
-                .toAirport(ticket.getToAirport())
-                .date(ticket.getDate())
+                .fromAirport(flightOutput.getFromAirport())
+                .toAirport(flightOutput.getToAirport())
+                .dateTime(flightOutput.getDateTime())
                 .price(ticket.getPrice())
                 .paidByMoney(bonus.getPaidByMoney())
                 .paidByBonus(bonus.getPaidByBonus())
                 .status(ticket.getStatus())
                 .privilege(bonus.getPrivilege())
                 .build();
+    }
+
+    private FlightOutput getFlight(String flightNumber) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .host(params.getHostFlight())
+                        .path(params.getPathFlight())
+                        .port(params.getPortFlight())
+                        .queryParam("flightNumber", flightNumber)
+                        .build())
+                .retrieve()
+                .onStatus(HttpStatus::isError, error -> {
+                    throw new FlightServiceNotAvailableException(error.statusCode());
+                })
+                .bodyToMono(FlightOutput.class)
+                .onErrorMap(Throwable.class, error -> {
+                    throw new GatewayErrorException(error.getMessage());
+                })
+                .block();
     }
 
     private TicketOutput createTicket(String username, BuyingInput input) {

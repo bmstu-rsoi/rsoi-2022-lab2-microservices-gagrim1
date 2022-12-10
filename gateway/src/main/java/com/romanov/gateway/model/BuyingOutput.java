@@ -13,7 +13,7 @@ public class BuyingOutput {
     private String flightNumber;
     private String fromAirport;
     private String toAirport;
-    private LocalDateTime date;
+    private LocalDateTime dateTime;
     private Integer price;
     private Integer paidByMoney;
     private Integer paidByBonus;
