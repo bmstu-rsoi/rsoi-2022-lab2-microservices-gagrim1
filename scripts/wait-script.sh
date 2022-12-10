@@ -2,8 +2,8 @@
 
 IFS="," read -ra PORTS <<<"$WAIT_PORTS"
 
-echo "Sleeping for 90 seconds"
-sleep 90
+echo "Sleeping for 15 seconds"
+sleep 15
 echo "Woke up!"
 
 PIDs=()
