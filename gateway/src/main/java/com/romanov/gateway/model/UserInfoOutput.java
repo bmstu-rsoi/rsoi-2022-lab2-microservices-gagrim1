@@ -6,6 +6,6 @@ import java.util.List;
 
 @Value
 public class UserInfoOutput {
-    List<TicketOutput> tickets;
+    List<FullTicketOutput> tickets;
     PrivilegeOutput privilege;
 }

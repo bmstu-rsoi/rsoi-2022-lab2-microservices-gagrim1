@@ -75,7 +75,7 @@ public class GatewayEndpoint {
 
     @GetMapping("/me")
     public UserInfoOutput getUserInfo(@RequestHeader(USERNAME_PARAM) String username) {
-        return new UserInfoOutput(getTickets(username), getPrivilege(username));
+        return new UserInfoOutput(getFullTickets(username), getPrivilege(username));
     }
 
     private PrivilegeOutput getPrivilege(String username) {
@@ -111,6 +111,24 @@ public class GatewayEndpoint {
                     flight.getDateTime(),
                     value.getPrice(),
                     value.getStatus())
+            );
+        });
+        return fullTickets;
+    }
+
+    private List<FullTicketOutput> getFullTickets(String username) {
+        List<FullTicketOutput> fullTickets = new ArrayList<>();
+        List<TicketOutput> tickets = getTickets(username);
+        tickets.forEach(value -> {
+            FlightOutput flight = getFlight(value.getFlightNumber());
+            fullTickets.add(
+                    new FullTicketOutput(value.getTicketUid(),
+                            value.getFlightNumber(),
+                            flight.getFromAirport(),
+                            flight.getToAirport(),
+                            flight.getDateTime(),
+                            value.getPrice(),
+                            value.getStatus())
             );
         });
         return fullTickets;
