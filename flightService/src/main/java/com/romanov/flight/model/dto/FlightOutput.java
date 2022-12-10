@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class FlightOutput {
     Integer id;
     String flightNumber;
-    LocalDateTime dateTime;
+    String dateTime;
     String fromAirport;
     String toAirport;
     Integer price;

@@ -6,13 +6,17 @@ import com.romanov.flight.model.dto.PaginationOutput;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import java.time.format.DateTimeFormatter;
+
 @Component
 public class FlightMapper {
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
     public FlightOutput convert(FlightEntity entity) {
         return new FlightOutput(
                 entity.getId(),
                 entity.getFlightNumber(),
-                entity.getDateTime(),
+                entity.getDateTime().format(FORMATTER),
                 entity.getFromAirport().getCity() + " " + entity.getFromAirport().getName(),
                 entity.getToAirport().getCity() + " " + entity.getToAirport().getName(),
                 entity.getPrice());
