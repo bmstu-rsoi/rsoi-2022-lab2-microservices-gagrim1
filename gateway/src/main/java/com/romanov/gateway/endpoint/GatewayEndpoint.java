@@ -16,6 +16,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -97,8 +98,22 @@ public class GatewayEndpoint {
     }
 
     @GetMapping("/tickets")
-    public List<TicketOutput> getUserTickets(@RequestHeader(USERNAME_PARAM) String username) {
-        return getTickets(username);
+    public List<FullTicketOutput> getUserTickets(@RequestHeader(USERNAME_PARAM) String username) {
+        List<FullTicketOutput> fullTickets = new ArrayList<>();
+        List<TicketOutput> tickets = getTickets(username);
+        tickets.forEach(value -> {
+            FlightOutput flight = getFlight(value.getFlightNumber());
+            fullTickets.add(
+                    new FullTicketOutput(value.getTicketUid(),
+                    value.getFlightNumber(),
+                    flight.getFromAirport(),
+                    flight.getToAirport(),
+                    flight.getDateTime(),
+                    value.getPrice(),
+                    value.getStatus())
+            );
+        });
+        return fullTickets;
     }
 
     private List<TicketOutput> getTickets(String username) {
@@ -130,13 +145,27 @@ public class GatewayEndpoint {
                 .block();
     }
 
+
     @GetMapping("/tickets/{ticketUid}")
-    public TicketOutput getTicket(@RequestHeader(USERNAME_PARAM) String username,
-                                  @PathVariable("ticketUid") UUID ticketUid) {
+    public FullTicketOutput getTicketByUid(@RequestHeader(USERNAME_PARAM) String username,
+                                           @PathVariable("ticketUid") UUID ticketUid) {
+        TicketOutput ticketOutput = getTicket(username, ticketUid);
+        FlightOutput flightOutput = getFlight(ticketOutput.getFlightNumber());
+        return new FullTicketOutput(ticketOutput.getTicketUid(),
+                ticketOutput.getFlightNumber(),
+                flightOutput.getFromAirport(),
+                flightOutput.getToAirport(),
+                flightOutput.getDateTime(),
+                ticketOutput.getPrice(),
+                ticketOutput.getStatus());
+
+    }
+
+    private TicketOutput getTicket(String username, UUID ticketUid) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .host(params.getHostTicket())
-                        .path(params.getPathTicket() + ticketUid)
+                        .path(params.getPathTicket() + "/" + ticketUid)
                         .port(params.getPortTicket())
                         .build()
                 )
