@@ -1,5 +1,7 @@
 package com.romanov.flight.service.impl;
 
+import com.romanov.flight.exception.NotFoundException;
+import com.romanov.flight.model.FlightEntity;
 import com.romanov.flight.model.dto.FlightOutput;
 import com.romanov.flight.model.dto.PaginationOutput;
 import com.romanov.flight.repository.FlightRepository;
@@ -15,6 +17,13 @@ import org.springframework.stereotype.Service;
 public class FlightServiceImpl implements FlightService {
     private final FlightRepository repository;
     private final FlightMapper mapper;
+
+    @Override
+    public FlightOutput getByFlightNumber(String flightNumber) {
+        FlightEntity entity = repository.findByFlightNumber(flightNumber)
+                .orElseThrow(() -> new NotFoundException("Flight with number: " + flightNumber + " not found!"));
+        return mapper.convert(entity);
+    }
 
     @Override
     public PaginationOutput getAll(Integer page, Integer size) {

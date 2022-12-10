@@ -1,5 +1,6 @@
 package com.romanov.flight.endpoint;
 
+import com.romanov.flight.model.dto.FlightOutput;
 import com.romanov.flight.model.dto.PaginationOutput;
 import com.romanov.flight.service.FlightService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,11 @@ public class FlightEndpoint {
     private final FlightService service;
 
     @GetMapping
+    public FlightOutput get(@RequestParam("flightNumber") String flightNumber) {
+        return service.getByFlightNumber(flightNumber);
+    }
+
+    @GetMapping("/all")
     public PaginationOutput getAll(@RequestParam("page") Integer page,
                                    @RequestParam("size") Integer size) {
         return service.getAll(page, size);

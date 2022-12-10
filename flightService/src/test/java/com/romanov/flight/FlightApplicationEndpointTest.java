@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class FlightApplicationEndpointTest extends EndpointTest {
     @Test
     void shouldReturnFlights() throws Exception {
-        mockMvc.perform(get("/flights")
+        mockMvc.perform(get("/flights/all")
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("page", "1")
                         .param("size", "10"))
@@ -26,6 +26,17 @@ public class FlightApplicationEndpointTest extends EndpointTest {
                 .andExpect(jsonPath("$.pageSize").value(10))
                 .andExpect(jsonPath("$.totalElements").value(1))
                 .andExpect(jsonPath("$.items.[0].flightNumber").value("AFL031"));
+    }
+
+    @Test
+    void shouldReturnFlightByNumber() throws Exception {
+        mockMvc.perform(get("/flights")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("flightNumber", "AFL031"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.flightNumber").value("AFL031"))
+                .andExpect(jsonPath("$.dateTime").value("2021-10-08T20:00:00"));
     }
 
 }
