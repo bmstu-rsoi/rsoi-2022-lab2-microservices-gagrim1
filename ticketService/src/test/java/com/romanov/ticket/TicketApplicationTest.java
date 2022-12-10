@@ -27,16 +27,12 @@ public class TicketApplicationTest extends EndpointTest {
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$", hasSize(2)))
 
-                .andExpect(jsonPath("$.[0].id").value(1))
                 .andExpect(jsonPath("$.[0].ticketUid").value("d6818ec1-3d27-4a14-b660-1922b14c515d"))
-                .andExpect(jsonPath("$.[0].username").value("Roman"))
                 .andExpect(jsonPath("$.[0].flightNumber").value("AFL031"))
                 .andExpect(jsonPath("$.[0].price").value(1500))
                 .andExpect(jsonPath("$.[0].status").value("PAID"))
 
-                .andExpect(jsonPath("$.[1].id").value(2))
                 .andExpect(jsonPath("$.[1].ticketUid").value("6c10f0e9-170c-4d69-bc8b-56f303e59a10"))
-                .andExpect(jsonPath("$.[1].username").value("Roman"))
                 .andExpect(jsonPath("$.[1].flightNumber").value("AFL040"))
                 .andExpect(jsonPath("$.[1].price").value(1500))
                 .andExpect(jsonPath("$.[1].status").value("PAID"));
@@ -50,9 +46,7 @@ public class TicketApplicationTest extends EndpointTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
 
-                .andExpect(jsonPath("$.id").value(3))
                 .andExpect(jsonPath("$.ticketUid").value("8d456c13-a60a-4d34-9db2-3965078c4045"))
-                .andExpect(jsonPath("$.username").value("Yuri"))
                 .andExpect(jsonPath("$.flightNumber").value("AFL031"))
                 .andExpect(jsonPath("$.price").value(1500))
                 .andExpect(jsonPath("$.status").value("PAID"));
@@ -66,7 +60,6 @@ public class TicketApplicationTest extends EndpointTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
 
-                .andExpect(jsonPath("$.id").value(3))
                 .andExpect(jsonPath("$.ticketUid").value("8d456c13-a60a-4d34-9db2-3965078c4045"))
                 .andExpect(jsonPath("$.status").value("PAID"));
 
@@ -76,7 +69,6 @@ public class TicketApplicationTest extends EndpointTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
 
-                .andExpect(jsonPath("$.id").value(3))
                 .andExpect(jsonPath("$.ticketUid").value("8d456c13-a60a-4d34-9db2-3965078c4045"))
                 .andExpect(jsonPath("$.status").value("CANCELED"));
     }
@@ -90,8 +82,7 @@ public class TicketApplicationTest extends EndpointTest {
                         .header("X-User-Name", "Yuri").content(input))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.id").value(4))
-                .andExpect(jsonPath("$.username").value("Yuri"))
+                .andExpect(jsonPath("$.ticketUid").exists())
                 .andExpect(jsonPath("$.flightNumber").value("AFL040"))
                 .andExpect(jsonPath("$.price").value(1500))
                 .andExpect(jsonPath("$.status").value("PAID"));
