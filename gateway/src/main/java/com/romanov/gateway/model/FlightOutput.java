@@ -12,5 +12,5 @@ import java.time.LocalDateTime;
 public class FlightOutput {
     String fromAirport;
     String toAirport;
-    LocalDateTime dateTime;
+    String dateTime;
 }

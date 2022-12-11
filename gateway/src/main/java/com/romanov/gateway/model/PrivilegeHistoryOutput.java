@@ -12,7 +12,7 @@ public class PrivilegeHistoryOutput {
     Integer id;
     Integer privilegeId;
     UUID ticketUid;
-    LocalDateTime dateTime;
+    String dateTime;
     Integer balanceDiff;
     String operationType;
 }

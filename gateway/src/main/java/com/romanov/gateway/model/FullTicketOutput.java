@@ -11,7 +11,7 @@ public class FullTicketOutput {
     String flightNumber;
     String fromAirport;
     String toAirport;
-    LocalDateTime date;
+    String date;
     Integer price;
     String status;
 }
