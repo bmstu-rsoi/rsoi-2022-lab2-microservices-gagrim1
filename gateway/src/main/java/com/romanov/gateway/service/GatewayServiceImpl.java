@@ -213,7 +213,7 @@ public class GatewayServiceImpl implements GatewayService {
                 .date(flightOutput.getDate())
                 .price(ticket.getPrice())
                 .paidByMoney(bonus.getPaidByMoney())
-                .paidByBonuses(bonus.getPaidByBonus())
+                .paidByBonuses(bonus.getPaidByBonuses())
                 .status(ticket.getStatus())
                 .privilege(bonus.getPrivilege())
                 .build();

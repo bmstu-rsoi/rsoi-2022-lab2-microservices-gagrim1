@@ -9,6 +9,6 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class BonusOutput {
     Integer paidByMoney;
-    Integer paidByBonus;
+    Integer paidByBonuses;
     PrivilegeOutput privilege;
 }
