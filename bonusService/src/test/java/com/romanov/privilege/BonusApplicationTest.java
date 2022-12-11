@@ -49,7 +49,7 @@ public class BonusApplicationTest extends EndpointTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$.paidByMoney").value(1500))
-                .andExpect(jsonPath("$.paidByBonus").value(0))
+                .andExpect(jsonPath("$.paidByBonuses").value(0))
                 .andExpect(jsonPath("$.privilege.status").value("GOLD"))
                 .andExpect(jsonPath("$.privilege.balance").value(650));
     }
