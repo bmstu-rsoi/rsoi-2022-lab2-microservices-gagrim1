@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class BonusOutput {
     private Integer paidByMoney;
-    private Integer paidByBonus;
+    private Integer paidByBonuses;
     private PrivilegeOutput privilege;
 }

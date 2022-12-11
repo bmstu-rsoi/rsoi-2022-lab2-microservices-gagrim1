@@ -50,17 +50,17 @@ public class PrivilegeServiceImpl implements PrivilegeService {
                 .balance(entity.getBalance())
                 .build();
 
-        if (input.getPaidFromBonus()) {
+        if (input.getPaidFromBonuses()) {
             DiscountOutput discountOutput = discountPrice(entity, input.getTicketUid(), price);
             privilegeOutput.setBalance(discountOutput.getNewBalance());
             output.setPaidByMoney(discountOutput.getPriceAfterDiscount());
-            output.setPaidByBonus(discountOutput.getPriceDifference());
+            output.setPaidByBonuses(discountOutput.getPriceDifference());
             output.setPrivilege(privilegeOutput);
         } else {
             Integer cashback = deposit(entity, input.getTicketUid(), price);
             privilegeOutput.setBalance(privilegeOutput.getBalance() + cashback);
             output.setPaidByMoney(price);
-            output.setPaidByBonus(0);
+            output.setPaidByBonuses(0);
             output.setPrivilege(privilegeOutput);
         }
         return output;

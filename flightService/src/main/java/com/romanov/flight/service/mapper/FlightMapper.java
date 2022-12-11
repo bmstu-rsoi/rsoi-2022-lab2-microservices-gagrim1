@@ -14,7 +14,6 @@ public class FlightMapper {
 
     public FlightOutput convert(FlightEntity entity) {
         return new FlightOutput(
-                entity.getId(),
                 entity.getFlightNumber(),
                 entity.getDateTime().format(FORMATTER),
                 entity.getFromAirport().getCity() + " " + entity.getFromAirport().getName(),

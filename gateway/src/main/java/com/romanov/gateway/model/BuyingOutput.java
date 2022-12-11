@@ -3,7 +3,6 @@ package com.romanov.gateway.model;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -13,10 +12,10 @@ public class BuyingOutput {
     private String flightNumber;
     private String fromAirport;
     private String toAirport;
-    private String dateTime;
+    private String date;
     private Integer price;
     private Integer paidByMoney;
-    private Integer paidByBonus;
+    private Integer paidByBonuses;
     private String status;
     private PrivilegeOutput privilege;
 }

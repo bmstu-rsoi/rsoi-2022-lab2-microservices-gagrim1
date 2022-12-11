@@ -86,7 +86,7 @@ public class GatewayServiceImpl implements GatewayService {
                             value.getFlightNumber(),
                             flight.getFromAirport(),
                             flight.getToAirport(),
-                            flight.getDateTime(),
+                            flight.getDate(),
                             value.getPrice(),
                             value.getStatus())
             );
@@ -124,7 +124,7 @@ public class GatewayServiceImpl implements GatewayService {
                             value.getFlightNumber(),
                             flight.getFromAirport(),
                             flight.getToAirport(),
-                            flight.getDateTime(),
+                            flight.getDate(),
                             value.getPrice(),
                             value.getStatus())
             );
@@ -169,7 +169,7 @@ public class GatewayServiceImpl implements GatewayService {
                 ticketOutput.getFlightNumber(),
                 flightOutput.getFromAirport(),
                 flightOutput.getToAirport(),
-                flightOutput.getDateTime(),
+                flightOutput.getDate(),
                 ticketOutput.getPrice(),
                 ticketOutput.getStatus());
     }
@@ -210,10 +210,10 @@ public class GatewayServiceImpl implements GatewayService {
                 .flightNumber(ticket.getFlightNumber())
                 .fromAirport(flightOutput.getFromAirport())
                 .toAirport(flightOutput.getToAirport())
-                .dateTime(flightOutput.getDateTime())
+                .date(flightOutput.getDate())
                 .price(ticket.getPrice())
                 .paidByMoney(bonus.getPaidByMoney())
-                .paidByBonus(bonus.getPaidByBonus())
+                .paidByBonuses(bonus.getPaidByBonus())
                 .status(ticket.getStatus())
                 .privilege(bonus.getPrivilege())
                 .build();

@@ -9,5 +9,5 @@ public class CalculationPriceInput {
     String username;
     UUID ticketUid;
     Integer price;
-    Boolean paidFromBonus;
+    Boolean paidFromBonuses;
 }

@@ -16,7 +16,7 @@ public class PrivilegeHistoryMapper {
                 .id(entity.getId())
                 .privilegeId(entity.getPrivilege().getId())
                 .ticketUid(entity.getTicketUid())
-                .dateTime(entity.getDateTime().format(FORMATTER))
+                .date(entity.getDateTime().format(FORMATTER))
                 .balanceDiff(entity.getBalanceDiff())
                 .operationType(entity.getOperationType())
                 .build();
